@@ -1,0 +1,53 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Jupyter Notebook Checkpoints
+.ipynb_checkpoints
+
+# Ignore virtual environments
+.venv/
+.devenv/
+
+# Nix-specific build outputs
+result
+.nix-gcroots/
+
+# Ignore Python egg files
+*.egg
+*.egg-info/
+dist/
+build/
+*.whl
+
+# Output files
+*.out
+*.log
+
+# Ignore data files (if any)
+*.csv
+*.tsv
+*.data
+*.dat
+*.txt
+
+# Ignore macOS system files
+.DS_Store
+
+# Ignore Linux/Mac temporary files
+*.swp
+
+# Ignore any other system files
+Thumbs.db
+Desktop.ini
+
+# VSCode settings
+.vscode/
+
+# Specific paths in your project
+algorithms/.ipynb_checkpoints/
+algorithms/*/.ipynb_checkpoints/
+
+# Git directory (Git itself manages this)
+.git/
