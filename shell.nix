@@ -12,7 +12,9 @@ pkgs.mkShell rec {
 
     # git-crypt
     # stdenv.cc.cc # jupyter lab needs
-
+    librsvg
+    imagemagick
+    ghostscript
     # pythonPackages.python
     pythonPackages.ipykernel
     pythonPackages.notebook

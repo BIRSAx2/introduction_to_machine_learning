@@ -51,3 +51,5 @@ algorithms/*/.ipynb_checkpoints/
 
 # Git directory (Git itself manages this)
 .git/
+
+tmp/

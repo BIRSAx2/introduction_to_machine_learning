@@ -385,3 +385,196 @@ P(|\phi - \hat\phi| > \gamma) <=2 \exp(-2\gamma^2n)
 $$
 
 This lemma, also known in learning theory as *Chefnoff bound*, says that if we take $\hat\phi$ (the average of $n$ Bernoulli($\phi$) random variables) to be our estimate of $\phi$, then the probability of our begin far from the true value is small, so long that $n$ is large. Another way of saying this is that if you have a biased coin whose change of landing on heads is $\phi$, then if you toss it $n$ times and calculate the fraction of times that it came up heads, that will be a good estimate of $\phi$ with high probability (if $n$ is sufficiently large)
+
+# Appendix 2: Exam Questions
+
+## Perceptron
+
+![Perceptron](assets/perceptron.png){ width=250px }
+
+The input to the Perceptron Learning Algorithm is a data set of $n \ge 1$ points (each $d$-dimentional), and their associated label ($+$ or $-$):
+$$
+\{ (x^1, y^1), \dots, (x^n, y^n)\} \quad \forall i \in \{1,2, \dots, n\}, y^i \in \{-1, 1\}
+$$
+We must assume that the input data points are linearly separable, consistend with the choice of ignoring the bias term, we shall assume that the input data points are not only linearly separable, but also that there exists a hyperplane that separates the two classes, and that the hyperplane passes through the origin.
+
+**Assumption 1: Linear Separability**:
+
+There exists some $w^* \in \mathbb{R}^d$ such that $||w^*|| = 1$ and for some $\gamma > 0$, $\forall i \in \{1, \dots, n\}$:
+$$
+y^i(w^* \cdot x^i) > \gamma
+$$
+Observe that the condition on each data point $i$ essentially amounts to saying that its prediction (that is $\text{sign}(w^*x_i)$) matches its label $y^i$. Requiring $y^i(w^* \cdot x^i)$ to be strictly positive implies we can find a hyperplane such taht none of the data points actually lie on the hyperplane.
+If the separating hyperplane must necessarily pass through some of the data points, note that the Perceptron's prediction depends on whether we assign $\text{sign}(0)$ to be $+1$ or $-1$.
+If the input is genuinely linearly separable then the choice doesn't matter, since we can always find a separating hyperplane that doesn't pass through any of the data points.
+
+The quanity $\gamma$ in the assumption is a placeholder for the minimum value of the $y^i(W^* \cdot x^i)$. The analysis will yield an upper bound on the convergence time of the PLA that relates inversely with $\gamma$. The bound will also depende on the distance between the input points and the origin, we can assume that the distance is at most $R$.
+
+**Assumption 2: Boundedness**:
+
+There exists $R \in \mathbb{R}$ such that for $i \in \{1, \dots, n\}$:
+$$
+||x^i|| \le R
+$$
+
+Naturally the PLA itself does not explicitly knwo $w^*, \gamma$ and $R$, although $R$ can be inferred from the data.
+
+**Perceptron Learning Algorithm**:
+$$
+\begin{aligned}
+&k \gets 1; w_k \gets 0\\
+
+&\text{while } \exists i \in \{1, \dots, n\} \text{ s.t. } y^i(w_k \cdot x^i) \le 0 \text{ do} \\
+&\quad w_{k+1} \gets w_k + y^i x^i\\
+&\quad k \gets k + 1\\
+&\text{end while}\\
+&\text{return } w_k
+\end{aligned}
+$$
+
+The algorithm maintains a weight vector, initially the zero vector. At each iteration, the algorithm checks if there is a misclassified point, and if so, it updates the weight vector by adding the misclassified point to it. The algorithm terminates when there are no more misclassified points.
+
+### Perceptron Convergence Proof
+
+The Perceptron Learning Algorithm makes at most $R^2/\gamma^2$ updates before converging.
+
+*Proof*:
+
+- It is immediate from the code that should the algorithm terminate and return a weight vector, then the weight vector must separate the data points.
+- Thus it's suffices to show that the algorithm terminates after at most $R^2/\gamma^2$ updates.
+
+In other words we need to show that $k$ is upper-bounded by $R^2/\gamma^2$:
+
+Note that $w^1 = 0$ and for $k \ge 1$, note that if $x^j$ is misclassified during iteration $k$ we have:
+$$
+\begin{aligned}
+w^{k + 1} \cdot w^* &= (w^k + y^j x^j) \cdot w^*\\
+&= w^k \cdot w^* + y^j x^j \cdot w^*\\
+&= w^k \cdot w^* + y^j \gamma\\
+\end{aligned}
+$$
+It follows by induction that $w^{k + 1} \cdot w^* = k \gamma$. Since $w^{k+1} \cdot w^* \le ||w^{k+1}|| \cdot ||w^*|| = ||w^{k+1}||$, we get:
+$$
+||w^{k+1}|| >k \gamma
+$$
+To obtain an upperbound we argue that:
+$$
+\begin{aligned}
+||w^{k+1}||^2 &= ||w^k + y^ix^i||^2 \\
+&= ||w^k||^2 ||y^ix^i||^2 + 2(w^k \cdot x^i)y^i\\
+&= ||w^k||^2 + 2(w^k \cdot x^i)y^i + ||x^i||^2\\
+&\le ||w^k||^2 + ||x^j||^2\\
+&\le kR^2
+\end{aligned}
+$$
+from which it follows by induction that:
+$$
+||w^{k+1}||^2 \le kR^2
+$$
+Thus we have:
+$$
+k^2 \gamma^2 \le ||w^{k+1}||^2 \le kR^2
+$$
+which implies :
+$$
+k < R^2/\gamma^2
+$$
+
+## Learning Algorithm
+
+Given a labelled dataset, for each objext $x_i = [x_i^0, \dots , x_i^n]$ there is a label $y_i$ which indicates the right prediction given the input $x_i$.
+Comparing our hypothesis $h(x_i)$ with the expected result $y_i$, we can have two scenarios:
+
+- The prediction matches the expected result: $y_i = h(x_i) = \pm 1$
+- The prediction doesn't match the expected result: $y_i = \pm 1 \ne h(x_i) = \mp 1$
+
+Looking at the problem from a geometrical point of view:
+$$
+\sum_{i = 0}^n w_i x_i = [w_o, \dots, w_n] \begin{bmatrix}
+  x_0\\
+  \vdots\\
+  x_n
+\end{bmatrix} = w^T x
+$$
+Suppose we are operating in a two-dimentions space, then $w_i = [w_i^1, w_i^2]$ and $x_i = [x_i^1, x_i^2]$. \
+Plotting the two vectors on the plane we obtain:
+
+![Plot of $w_i$ and $x_i$](assets/learning_algorithm_1.png){ width=250px }
+
+If the prediction is correct, then two vectors are in the same quadrant, otherwise they are in different quadrants.
+
+![Plot of $w_i$ and $x_i$](assets/learning_algorithm_2.png){ width=250px }
+
+In the second case a rotation is needed for $w_i$ to match $x_i$.
+This rotation can be defined as the following learning rule:
+$$
+w_\text{new} = w_\text{new} + \eta(x_iy_i) \iff h(h_i) \cdot y_i < 0
+$$
+Where $\eta$ is the learning rate.
+
+## Hoeffding Inequality
+
+Hoeffding inequelity answers the question "how do we know that we are approaching the target function in out learning algorithm?".
+
+Let $Z_1, \dots , Z_2$ be $n$ indipendent and indentically distributed (iid) random variables drawn from a Beronoulli ($\phi$) distribution.
+I.e. $P(Z_i = 1) = \phi$ and $P(Z_i = 0) = 1 - \phi$.
+
+Let $\hat\phi = {1\over n} \sum_{i = 1}^n Z_i$ be the mean of these random variables, and let any $\gamma > 0$ be fixed. Then:
+$$
+P(|\phi - \hat\phi| > \gamma) <=2 \exp(-2\gamma^2n)
+$$
+
+This lemma, also known in learning theory as *Chefnoff bound*, says that if we take $\hat\phi$ (the average of $n$ Bernoulli($\phi$) random variables) to be our estimate of $\phi$, then the probability of our begin far from the true value is small, so long that $n$ is large. Another way of saying this is that if you have a biased coin whose change of landing on heads is $\phi$, then if you toss it $n$ times and calculate the fraction of times that it came up heads, that will be a good estimate of $\phi$ with high probability (if $n$ is sufficiently large)
+
+## Gradient Descent (Adeline)
+
+## Regression (Linear and Polynomial)
+
+## Logistic Regression Classifier
+
+## Binary classification Problem
+
+## Wilcoxon Test
+
+Given two models, like a KNN with $k = 1$ and a KNN with $k = 5$, how can we determine which one is better?
+
+We can use pairing, which consists of organizing training samples into matched pairs, and see how the experiments make the model perform.
+
+![Example of pairing](assets/wilcoxon_1.png){ width=250px }
+
+Using the same train-test split:
+$$
+\begin{aligned}
+  &\text{ex}_1 &\text{Train}_1 &\quad\text{Test}_1 \\
+  &\text{ex}_2 &\text{Train}_2 &\quad\text{Test}_2 \\
+  &\dots & \dots &\quad \dots
+\end{aligned}
+$$
+
+How can we determine which model performs better? Is the difference between the two models due to chance, or is it statistically significant?
+
+Let's assume that the points are distributed like a gaussian distribution. If the difference between the models is constantly far from the mean, then the difference is statistically significant.
+
+![Example of pairing](assets/wilcoxon_2.png){ width=250px }
+
+$A_1 + A_2 = 5\%$ of the total distribution, this percentage is called **$\alpha$-value**
+The $p$-value is the probability of observing the specific sequence of differences in the experiments.
+$\alpha$ is a predetermined threshold for determining the significance of a result, while the $p$-value is the probability is the probability that helps decide whether the null hypothesis can be rejected on based on that threshold.
+
+$$
+L_D(h) \le L_s(h) + \sqrt{C \frac{d + \log(1 /\delta)}{m}}
+$$
+where:
+
+- $L_D(h)$: Loss on what will happen outside of the training sample, out of sample error
+- $L_s(h)$: Loss on the sample, in-sample error
+- $m$: the number of datapoints
+- $d$: is the VC dimension of the perceptron ($d= 3$)
+If we have a simpler and a more complex model, both with in-sample-error $s$ ,the more complex model will be less precise in the out-of-sample error given it's structure (less precise $\implies$ higher variance).
+
+An analogous thing can be argued for the validation test:
+$$
+L_D(h) \le L_s(h) + \sqrt{\frac{\log(1 /\delta)}{2mv}}
+$$
+
+![Errors](assets/wilcoxon_3.png){ width=250px }
