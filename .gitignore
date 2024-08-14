@@ -53,3 +53,8 @@ algorithms/*/.ipynb_checkpoints/
 .git/
 
 tmp/
+
+
+flashcards/
+
+old/
