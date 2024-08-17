@@ -1,59 +1,63 @@
-# Introduction to Machine Learning
+# Introduction to Machine Learning Course Repository
 
-This repository contains materials for an Introduction to Machine Learning course, including Jupyter notebooks, exercises, and datasets. The content is structured to provide a comprehensive understanding of various machine learning models and techniques.
+This repository contains materials for an Introduction to Machine Learning course. It includes Jupyter notebooks, exercises, and datasets designed to provide a comprehensive understanding of various machine learning models and techniques.
 
 ## Repository Structure
 
-```
-.
-├── exercises
-│   ├── exams
-│   ├── perceptron-basic
-│   └── sklearn
-├── 1-perceptron.ipynb
-├── 2-adaline.ipynb
-├── 3-linear-regression.ipynb
-├── 4-polynomial-regression.ipynb
-├── 5-logistic-regression.ipynb
-├── introduction_to_machine_learning.pdf
-├── requirements.txt
-└── shell.nix
-```
+The repository is organized into several directories, each focusing on different types of machine learning problems and topics:
 
-## Main Notebooks
+### 1. `classification-problems/`
 
-1. `1-perceptron.ipynb`: Introduction to the Perceptron algorithm
-2. `2-adaline.ipynb`: Adaptive Linear Neuron (ADALINE) model
-3. `3-linear-regression.ipynb`: Linear Regression techniques
-4. `4-polynomial-regression.ipynb`: Polynomial Regression methods
-5. `5-logistic-regression.ipynb`: Logistic Regression for classification
+This directory contains projects related to various classification problems, including:
 
-## Exercises
+- **breast-cancer-classification/**: A project on classifying breast cancer cases.
+- **income-classification/**: Contains the dataset (`income_dataset.csv`) and notebook (`ex1.ipynb`) for classifying income levels.
+- **iris-classification/**: Focuses on the famous Iris dataset classification problem.
 
-The `exercises` directory contains various practice materials:
+### 2. `regression-problems/`
 
-- `exams`: Exam simulations and solutions
-- `perceptron-basic`: Basic exercises on the Perceptron model
-- `sklearn`: Exercises using scikit-learn library, covering:
-  - Classification (Income prediction)
-  - Loan prediction
-  - Regression (Fuel consumption)
-  - Rice classification
-  - ...and more
+This directory focuses on regression problems:
 
-## Additional Files
+- **diabetes-regression/**: A project on predicting diabetes progression.
+- **flue-consumption-regression/**: Contains notebooks and datasets for predicting flu consumption.
 
-- `introduction_to_machine_learning.pdf`: Course material in PDF format
-- `requirements.txt`: List of Python dependencies
-- `shell.nix`: Nix shell configuration file
+### 3. `theory-and-implementation/`
+
+This directory includes theoretical notebooks and implementations of various machine learning algorithms:
+
+- `1-perceptron.ipynb`: Implementation of the Perceptron algorithm.
+- `2-adaline.ipynb`: Implementation of the Adaline algorithm.
+- `3-linear-regression.ipynb`: Introduction to linear regression.
+- `4-polynomial-regression.ipynb`: Polynomial regression.
+- `5-logistic-regression.ipynb`: Logistic regression.
+- `introduction_to_machine_learning.pdf`: A PDF document introducing the basics of machine learning.
+
+## Other Files
+
+- **README.md**: This file.
+- **requirements.txt**: Lists the Python dependencies required to run the notebooks.
+- **shell.nix**: Nix shell configuration for setting up the environment.
 
 ## Getting Started
 
-1. Clone this repository
-2. Install the required dependencies:
+To get started with the notebooks, you will need to install the required dependencies. This can be done using the following command:
 
-   ```
-   pip install -r requirements.txt
-   ```
+```bash
+pip install -r requirements.txt
+```
 
-3. Open the Jupyter notebooks
+If you're using Nix, you can set up your environment with:
+
+```bash
+nix-shell
+```
+
+## How to Use
+
+1. Navigate to the directory of interest (e.g., `classification-problems/iris-classification/`).
+2. Open the Jupyter notebook (`.ipynb` file) using JupyterLab or Jupyter Notebook.
+3. Follow the instructions and run the cells to explore the different machine learning models and techniques.
+
+## Contributing
+
+This project is only for educational purposes, and I'm not accepting contributions.

@@ -54,7 +54,10 @@ algorithms/*/.ipynb_checkpoints/
 
 tmp/
 
-
 flashcards/
 
 old/
+
+exercises/
+
+.idea/
